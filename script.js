@@ -2,6 +2,16 @@ $(document).ready(function () {
   // grab the necessary tools to use ajax and weather api
   // create a var to store the queryURL
   // var for api key to weather app
+  var myName = 'brandon';
+  console.log(myName)
+  // 1. Create global array to store each city user is searching data for
+  var locationArray = []
+  console.log(locationArray)
+  // 2. Once you have an array push each city user is searching into that array(this will be within click event of submit button where you're getting user input)
+  // 3. Once you pushed into an array within same click event write localStorage.setItem to set that array into localStorage(make sure to JSON.stringify for an array you're setting up)
+  // 4. And then you can retrieve array data back using localstorage.getItem
+
+
   var APIKey = "a8bfa6adc6cea260ba1bbbb01147a568"
 
   $('#search-city').on('click', searchForCity)
@@ -14,6 +24,7 @@ $(document).ready(function () {
     // create a var findCity access the textContent of the inputField/previous sibling element
     var findCity = $(this).siblings('#inputField').val()
     // input the url to query insert findCity
+    locationArray.push(findCity)
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
     $.ajax({
       url: queryURL,
@@ -49,7 +60,6 @@ $(document).ready(function () {
         console.log(response)
 
         return { lat, lon }
-
       })
       .then(coordinates => {
         var lat = coordinates.lat;
@@ -142,5 +152,10 @@ $(document).ready(function () {
     $('#input-list').append(textInputBtn)
     console.log('end of function')
 
+    // on click event for input-button class
+
+
   }
+  //$('.input-button').on('click', searchForCity)
+  // console.log('INPUT BUTTON CLASS CLICKED')
 })
