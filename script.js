@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // grab the necessary tools to use ajax and weather api
     // create a var to store the queryURL
     // var for api key to weather app
@@ -15,17 +14,36 @@ $(document).ready(function () {
         var textInputBtn = $('<button>')
         // create a var userText access the textContent of the inputField/previous sibling element
         var findCity = $(this).siblings('#inputField').val()
-        var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
-        
+        var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`        
         $.ajax({
            url: queryURL,
            method: 'GET'
           })
-          .then(response => {
+          .then(response => {   
+              //CURRENT WEATHER API CALL
+              //FILL IN ALL CURRENT WEATHER HTML
+              const lat = response.coord.lat;
+              const lon = response.coord.lon;
                 const temp = 'Temperature: ' + response.main.temp;
                 $('#current-temp').text(temp)
 
               console.log(response)
+            
+              return { lat, lon }
+
+            })
+            .then(coordinates => {
+                var lat = coordinates.lat;
+                var lon = coordinates.lon;
+                var queryURL =  `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`
+
+                $.ajax({
+                    url: queryURL,
+                    method: 'GET'
+                })
+                .then(fiveDayForecast => console.log('5Day-->', fiveDayForecast))
+                .catch(err => console.log(err))
+
             })
           .catch(err => console.log(err))
 
@@ -41,6 +59,7 @@ $(document).ready(function () {
         textInputBtn.text(findCity)
         $('#input-list').append(textInputBtn)     
         console.log('end of function')
+
     }
 
 
