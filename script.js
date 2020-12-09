@@ -12,8 +12,9 @@ $(document).ready(function () {
         console.log('button was clicked')
         // create a button variable 
         var textInputBtn = $('<button>')
-        // create a var userText access the textContent of the inputField/previous sibling element
+        // create a var findCity access the textContent of the inputField/previous sibling element
         var findCity = $(this).siblings('#inputField').val()
+        // input the url to query insert findCity
         var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`        
         $.ajax({
            url: queryURL,
@@ -22,10 +23,15 @@ $(document).ready(function () {
           .then(response => {   
               //CURRENT WEATHER API CALL
               //FILL IN ALL CURRENT WEATHER HTML
+              //grab lat and lon variables
               const lat = response.coord.lat;
               const lon = response.coord.lon;
-                const temp = 'Temperature: ' + response.main.temp;
-                $('#current-temp').text(temp)
+              // jumbotron temp
+              var temp = response.main.temp;
+              var tempF = (temp - 273.15) * 1.80 + 32
+              console.log(tempF)
+              // 
+                $('#converted-temp').text(tempF)
 
               console.log(response)
             
@@ -45,13 +51,9 @@ $(document).ready(function () {
                 .catch(err => console.log(err))
 
             })
-          .catch(err => console.log(err))
-
-
-
-        
+          .catch(err => console.log(err))     
         // give the button a style class 
-        textInputBtn.addClass('input-button')
+        textInputBtn.addClass('.input-button')
         // give each button an attr
         textInputBtn.attr('class','input-text')
         console.log('t4estInput after adding class --> ', textInputBtn)
