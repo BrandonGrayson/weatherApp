@@ -23,15 +23,29 @@ $(document).ready(function () {
           .then(response => {   
               //CURRENT WEATHER API CALL
               //FILL IN ALL CURRENT WEATHER HTML
+              var name = response.name
+              $('#name').text(name)
               //grab lat and lon variables
               const lat = response.coord.lat;
               const lon = response.coord.lon;
-              // jumbotron temp
+              // save the response temp to a var
               var temp = response.main.temp;
+              // convert temp to fahrenheight
               var tempF = (temp - 273.15) * 1.80 + 32
+              // log temp in console
               console.log(tempF)
-              // 
+              //  print temp to page
                 $('#converted-temp').text(tempF)
+                // DISPLAY HUMIDITY TO JUMBOTRON
+                var humidity = response.main.humidity
+                $('#humidity').text(humidity)
+                console.log(humidity)
+                // DISPLAY WIND SPEED
+                var windSpeed = response.wind.speed
+                $('#wind-speed').text(windSpeed)
+                // DISPLAY WEATHER
+                var weather = response.weather[0].description
+                $('#weather').text(weather)
 
               console.log(response)
             
