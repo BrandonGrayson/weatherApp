@@ -73,7 +73,7 @@ $(document).ready(function () {
             var dayAfterhumidity = fiveDayForecast.list[0].main.humidity
             $('#day-after-hum').append(dayAfterhumidity)
             console.log(dayAfterhumidity)
-
+            // CARD 2 ================================================
             // SECOND CARD DATA
             var day2Temp = fiveDayForecast.list[1].main.temp
             //console.log('We ARE HERE!!!!' + day2Temp)
@@ -88,19 +88,45 @@ $(document).ready(function () {
             console.log(dayAfterhumidity)
             // THIS IS WHERE I AM CURRENTLY STOPPED!!!!
             // THIRD CARD DATA
-
+            // CARD 3 ================================================
             var day3Temp = fiveDayForecast.list[2].main.temp
-            // //console.log('We ARE HERE!!!!' + day2Temp)
+            // //console.log('We ARE HERE!!!!' + day3Temp)
             // convert temp from kelvin to fahrenheight
             var day3TempF = (day3Temp - 273.15) * 1.80 + 32
             // select the id that day2Temp text should go
             $('#day-three-temp').text(day3TempF)
-            // console.log('WE ARE HERE!!!!!!!!!' + day2TempF)
+            // console.log('WE ARE HERE!!!!!!!!!' + day3TempF)
             // set the day3 Humidity
             var day3humidity = fiveDayForecast.list[2].main.humidity
             $('#day-three-hum').append(day3humidity)
             console.log('WE ARE AT THE END OF CARD 3')
 
+            // CARD 4 ================================
+
+            var day4Temp = fiveDayForecast.list[3].main.temp
+            //console.log('We ARE HERE!!!!' + day4Temp)
+            // convert temp from kelvin to fahrenheight
+            var day4TempF = (day4Temp - 273.15) * 1.80 + 32
+            // // select the id that day4Temp text should go
+            $('#day-four-temp').text(day4TempF)
+            // console.log('WE ARE HERE!!!!!!!!!' + day4TempF)
+            // // set the day3 Humidity
+            var day4humidity = fiveDayForecast.list[3].main.humidity
+            $('#day-four-hum').append(day4humidity)
+            // console.log('WE ARE AT THE END OF CARD 3')
+
+            // CARD 5 =================================
+            var day5Temp = fiveDayForecast.list[4].main.temp
+            // //console.log('We ARE HERE!!!!' + day5Temp)
+            // convert temp from kelvin to fahrenheight
+            var day5TempF = (day5Temp - 273.15) * 1.80 + 32
+            // select the id that day4Temp text should go
+            $('#day-five-temp').text(day5TempF)
+            // // console.log('WE ARE HERE!!!!!!!!!' + day5TempF)
+            // set the day3 Humidity
+            var day5humidity = fiveDayForecast.list[4].main.humidity
+            $('#day-five-hum').append(day5humidity)
+            // // console.log('WE ARE AT THE END OF CARD 3')
           })
           .catch(err => console.log(err))
 
