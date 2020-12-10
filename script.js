@@ -54,6 +54,8 @@ $(document).ready(function () {
         //CURRENT WEATHER API CALL
         //FILL IN ALL CURRENT WEATHER HTML
         var name = response.name
+        // a var to store the result from getItem. 
+        // get item will either return history 
         var searchHistory = JSON.parse(localStorage.getItem('history')) || []
         searchHistory.push(name)
         localStorage.setItem('history', JSON.stringify(searchHistory))
@@ -189,7 +191,7 @@ $(document).ready(function () {
     for (i = 0; i < searchHistory.length; i++) {
       var cityName = searchHistory[i]
       var newLi = $('<li>')
-      var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${newLi}&appid=${APIKey}`
+      var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`
       newLi.attr('class', 'input-text')
       newLi.text(cityName)
   
@@ -199,6 +201,7 @@ $(document).ready(function () {
           url: queryURL,
           method: 'GET'
         }).then(res=> {
+          
           console.log('HEY LOOK AT THIS RESPONSE' + res)
         })
         // access this button that was clicked 
