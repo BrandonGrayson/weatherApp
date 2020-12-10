@@ -182,32 +182,32 @@ $(document).ready(function () {
   }
   //$('.input-button').on('click', searchForCity)
   // console.log('INPUT BUTTON CLASS CLICKED')
+
+  function loadSearchHistory() {
+  //  var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
+    var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
+  
+    var inputList = $('#input-list')
+  
+    for (i = 0; i < searchHistory.length; i++) {
+      var cityName = searchHistory[i]
+      var newLi = $('<li>')
+      newLi.attr('class', 'input-text')
+      newLi.text(cityName)
+  
+      newLi.on('click', function(){
+        // extract code needed to pass in a argument to searchForCity function
+        $.ajax({
+          url: queryURL,
+          method: 'GET'
+        })
+        // access this button that was clicked 
+        // call function
+        // need a function that takes in a name of a city. Access the queryURL / 
+      })
+      inputList.append(newLi)    
+    }  
+  }
+  loadSearchHistory()
 })
 
-function loadSearchHistory() {
-  var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
-
-  var inputList = $('#input-list')
-
-  for (i = 0; i < searchHistory.length; i++) {
-    var cityName = searchHistory[i]
-    var newLi = $('<li>')
-    newLi.attr('class', 'input-text')
-    newLi.text(cityName)
-    newLi.on('click', function(){
-      // extract code needed to pass in a argument to searchForCity function
-      $.ajax({
-        url: queryURL,
-        method: 'GET'
-      })
-      // access this button that was clicked 
-      // call function
-      // need a function that takes in a name of a city. Access the queryURL / 
-    })
-    inputList.append(newLi)    
-  }
-
-
-
-loadSearchHistory()
-}
