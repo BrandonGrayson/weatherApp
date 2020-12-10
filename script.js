@@ -64,7 +64,7 @@ $(document).ready(function () {
         // save the response temp to a var
         var temp = response.main.temp;
         // convert temp to fahrenheight
-        var tempF = (temp - 273.15) * 1.80 + 32
+        var tempF = Math.floor((temp - 273.15) * 1.80 + 32)
         // log temp in console
         console.log(tempF)
         //  print temp to page
@@ -98,7 +98,7 @@ $(document).ready(function () {
             // set the day after temp var to main.temp
             var dayAfterTemp = fiveDayForecast.list[0].main.temp
             // convert temp from kelvin to fahrenheight
-            var dayAfterTempF = (dayAfterTemp - 273.15) * 1.80 + 32
+            var dayAfterTempF = Math.floor((dayAfterTemp - 273.15) * 1.80 + 32)
             // select the id to append dayAfterTempF
             $('#day-after-temp').text(dayAfterTempF)
             console.log(dayAfterTempF)
@@ -106,12 +106,13 @@ $(document).ready(function () {
             var dayAfterhumidity = fiveDayForecast.list[0].main.humidity
             $('#day-after-hum').append(dayAfterhumidity)
             console.log(dayAfterhumidity)
+
             // CARD 2 ================================================
             // SECOND CARD DATA
             var day2Temp = fiveDayForecast.list[1].main.temp
             //console.log('We ARE HERE!!!!' + day2Temp)
             // convert temp from kelvin to fahrenheight
-            var day2TempF = (day2Temp - 273.15) * 1.80 + 32
+            var day2TempF = Math.floor((day2Temp - 273.15) * 1.80 + 32)
             // select the id that day2Temp text should go
             $('#day-two-temp').text(day2TempF)
             console.log('WE ARE HERE!!!!!!!!!' + day2TempF)
@@ -125,7 +126,7 @@ $(document).ready(function () {
             var day3Temp = fiveDayForecast.list[2].main.temp
             // //console.log('We ARE HERE!!!!' + day3Temp)
             // convert temp from kelvin to fahrenheight
-            var day3TempF = (day3Temp - 273.15) * 1.80 + 32
+            var day3TempF = Math.floor((day3Temp - 273.15) * 1.80 + 32)
             // select the id that day2Temp text should go
             $('#day-three-temp').text(day3TempF)
             // console.log('WE ARE HERE!!!!!!!!!' + day3TempF)
@@ -139,7 +140,7 @@ $(document).ready(function () {
             var day4Temp = fiveDayForecast.list[3].main.temp
             //console.log('We ARE HERE!!!!' + day4Temp)
             // convert temp from kelvin to fahrenheight
-            var day4TempF = (day4Temp - 273.15) * 1.80 + 32
+            var day4TempF = Math.floor((day4Temp - 273.15) * 1.80 + 32)
             // // select the id that day4Temp text should go
             $('#day-four-temp').text(day4TempF)
             // console.log('WE ARE HERE!!!!!!!!!' + day4TempF)
@@ -152,7 +153,7 @@ $(document).ready(function () {
             var day5Temp = fiveDayForecast.list[4].main.temp
             // //console.log('We ARE HERE!!!!' + day5Temp)
             // convert temp from kelvin to fahrenheight
-            var day5TempF = (day5Temp - 273.15) * 1.80 + 32
+            var day5TempF = Math.floor((day5Temp - 273.15) * 1.80 + 32)
             // select the id that day4Temp text should go
             $('#day-five-temp').text(day5TempF)
             // // console.log('WE ARE HERE!!!!!!!!!' + day5TempF)
