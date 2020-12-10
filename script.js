@@ -184,14 +184,12 @@ $(document).ready(function () {
   // console.log('INPUT BUTTON CLASS CLICKED')
 
   function loadSearchHistory() {
-  var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`
     var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
-  
     var inputList = $('#input-list')
-  
     for (i = 0; i < searchHistory.length; i++) {
       var cityName = searchHistory[i]
       var newLi = $('<li>')
+      var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${newLi}&appid=${APIKey}`
       newLi.attr('class', 'input-text')
       newLi.text(cityName)
   
