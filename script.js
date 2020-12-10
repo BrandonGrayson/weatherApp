@@ -184,7 +184,7 @@ $(document).ready(function () {
   // console.log('INPUT BUTTON CLASS CLICKED')
 
   function loadSearchHistory() {
-  //  var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
+  var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`
     var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
   
     var inputList = $('#input-list')
@@ -200,6 +200,8 @@ $(document).ready(function () {
         $.ajax({
           url: queryURL,
           method: 'GET'
+        }).then(res=> {
+          console.log('HEY LOOK AT THIS RESPONSE' + res)
         })
         // access this button that was clicked 
         // call function
