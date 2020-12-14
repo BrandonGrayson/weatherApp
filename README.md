@@ -16,7 +16,12 @@ This app is still in its early stages so if you pull up our console you'll see a
 
 ### credit To
 Brandon Grayson
+Email: brandonbgrayson@gmail.com
+Phone: 856-434-0321
 
-#### LINKS
+#### Technologies
+JQuery
+
+##### LINKS
 https://brandongrayson.github.io/weatherApp/
 https://github.com/BrandonGrayson/weatherApp
