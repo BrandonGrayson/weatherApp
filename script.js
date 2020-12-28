@@ -1,3 +1,4 @@
+console.log(moment())
 var APIKey = "a8bfa6adc6cea260ba1bbbb01147a568"
 
   function searchCity(name) {
@@ -42,7 +43,7 @@ $(document).ready(function () {
     // input the url to query insert findCity
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
 
-    var testSearch = searchCity('miami')
+    var testSearch = searchCity('miami') // this should be the VALUE INSIDE findCity
 
     console.log('TEST SEARCH-->', testSearch)
 
@@ -200,9 +201,9 @@ $(document).ready(function () {
         $.ajax({
           url: queryURL,
           method: 'GET'
-        }).then(res=> {
-          
-          console.log('HEY LOOK AT THIS RESPONSE' + res)
+        }).then(res => {
+
+          console.log(res)
         })
         // access this button that was clicked 
         // call function
@@ -212,5 +213,11 @@ $(document).ready(function () {
     }  
   }
   loadSearchHistory()
+
+
+  function fiveDayForecast () {
+
+
+  }
 })
 
