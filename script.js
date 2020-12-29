@@ -53,6 +53,11 @@ $(document).ready(function () {
     })
       .then(response => {
         //CURRENT WEATHER API CALL
+        // fill in todays date info
+        let today = moment().format('dddd, MMMM Do YYYY')
+        $('#current-date').text(today)
+        console.log(`Should be todays date----> ${today.toString()}`);
+        // ==================================================================================================
         //FILL IN ALL CURRENT WEATHER HTML
         var name = response.name
         // a var to store the result from getItem. 
@@ -98,6 +103,13 @@ $(document).ready(function () {
         })
           .then(fiveDayForecast => {
             console.log('5Day-->', fiveDayForecast)
+            // grab the first cards id and give it tomorrows date 
+            let tomorrowsDate = moment().add(1, 'days').format('dddd, MMMM Do YYYY')
+            console.log(`This is where TOMORROWS date -----> ${tomorrowsDate}`)
+            $('#day-after-date').text(tomorrowsDate)
+            // set day after date using moment.js
+            // $('#day-after-date').text(moment().add(1, 'days').calender())
+            // console.log('Moment Time Stamp ----->' + moment().add(1, 'days').calender())
             // set the day after temp var to main.temp
             var dayAfterTemp = fiveDayForecast.list[0].main.temp
             // convert temp from kelvin to fahrenheight
@@ -112,6 +124,10 @@ $(document).ready(function () {
 
             // CARD 2 ================================================
             // SECOND CARD DATA
+            let day2Date = moment().add(2, 'days').format('dddd, MMMM Do YYYY')
+            console.log(`This is where TOMORROWS date -----> ${day2Date}`)
+            $('#day-2-date').text(day2Date)
+            // 2 days after date=========================================
             var day2Temp = fiveDayForecast.list[1].main.temp
             //console.log('We ARE HERE!!!!' + day2Temp)
             // convert temp from kelvin to fahrenheight
@@ -126,6 +142,9 @@ $(document).ready(function () {
             // THIS IS WHERE I AM CURRENTLY STOPPED!!!!
             // THIRD CARD DATA
             // CARD 3 ================================================
+            let day3Date = moment().add(3, 'days').format('dddd, MMMM Do YYYY')
+            console.log(`This is where TOMORROWS date -----> ${day3Date}`)
+            $('#day-3-date').text(day3Date)
             var day3Temp = fiveDayForecast.list[2].main.temp
             // //console.log('We ARE HERE!!!!' + day3Temp)
             // convert temp from kelvin to fahrenheight
@@ -138,7 +157,11 @@ $(document).ready(function () {
             $('#day-three-hum').append(day3humidity)
             console.log('WE ARE AT THE END OF CARD 3')
 
-            // CARD 4 ================================
+            // CARD 4 =================================
+            let day4Date = moment().add(4, 'days').format('dddd, MMMM Do YYYY')
+            console.log(`This is where TOMORROWS date -----> ${day4Date}`)
+            $('#day-4-date').text(day4Date)
+            // date info================================
 
             var day4Temp = fiveDayForecast.list[3].main.temp
             //console.log('We ARE HERE!!!!' + day4Temp)
@@ -153,6 +176,11 @@ $(document).ready(function () {
             // console.log('WE ARE AT THE END OF CARD 3')
 
             // CARD 5 =================================
+            let day5Date = moment().add(5, 'days').format('dddd, MMMM Do YYYY')
+            console.log(`This is where TOMORROWS date -----> ${day5Date}`)
+            $('#day-5-date').text(day2Date)
+
+            // date info=================================
             var day5Temp = fiveDayForecast.list[4].main.temp
             // //console.log('We ARE HERE!!!!' + day5Temp)
             // convert temp from kelvin to fahrenheight
