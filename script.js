@@ -35,6 +35,7 @@ $(document).ready(function () {
     //oging to add info for the current weather and the 5 day
 
   function searchForCity() {
+    clearHistory()
     console.log('button was clicked')
     // create a button variable 
     var textInputBtn = $('<button>')
@@ -206,7 +207,6 @@ $(document).ready(function () {
     textInputBtn.text(findCity)
     $('#input-list').append(textInputBtn)
     console.log('end of function')
-
     // on click event for input-button class
 
 
@@ -224,22 +224,35 @@ $(document).ready(function () {
       newLi.attr('class', 'input-text')
       newLi.text(cityName)
   
-      newLi.on('click', function(){
-        // extract code needed to pass in a argument to searchForCity function
-        $.ajax({
-          url: queryURL,
-          method: 'GET'
-        }).then(res => {
+      // newLi.on('click', function(){
+      //   // extract code needed to pass in a argument to searchForCity function
+      //   $.ajax({
+      //     url: queryURL,
+      //     method: 'GET'
+      //   }).then(res => {
 
-          console.log(res)
-        })
-        // access this button that was clicked 
-        // call function
-        // need a function that takes in a name of a city. Access the queryURL / 
-      })
+      //     console.log(res)
+      //   })
+      //   // access this button that was clicked 
+      //   // call function
+      //   // need a function that takes in a name of a city. Access the queryURL / 
+      // })
       inputList.append(newLi)    
     }  
   }
+
+  function clearHistory () {
+    let clearme = '';
+    $('#day-after-hum').text(clearme)
+    $('#day-two-hum').text(clearme)
+    $('#day-three-hum').text(clearme)
+    $('#day-four-hum').text(clearme)
+    $('#day-five-hum').text(clearme)
+    console.log(`THIS IS THE DAY AFTER HUMIDITY DATA!!!! ----> ${clearme}`)
+    // $('#day-after-hum').text() = "";
+    // clearme.text() = "";
+  }
+
   loadSearchHistory()
 
 
