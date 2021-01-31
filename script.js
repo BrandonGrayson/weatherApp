@@ -1,5 +1,7 @@
 console.log(moment())
-var APIKey = "a8bfa6adc6cea260ba1bbbb01147a568"
+$(document).ready(function () {
+
+  var APIKey = "a8bfa6adc6cea260ba1bbbb01147a568"
 
   function searchCity(name) {
 
@@ -15,47 +17,39 @@ var APIKey = "a8bfa6adc6cea260ba1bbbb01147a568"
       }).catch(error => console.log(error))
       return cityInfo
   }
-$(document).ready(function () {
-  // grab the necessary tools to use ajax and weather api
-  // create a var to store the queryURL
 
-  // SET UP LOCAL STORAGE!!!
-  // 1. Create global array to store each city user is searching data for
-  // 2. Once you have an array push each city user is searching into that array(this will be within click event of submit button where you're getting user input)
-  // 3. Once you pushed into an array within same click event write localStorage.setItem to set that array into localStorage(make sure to JSON.stringify for an array you're setting up)
-  // 4. And then you can retrieve array data back using localstorage.getItem
+  function loadSearchHistory() {
+    var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
+    var inputList = $('#input-list')
+    for (i = 0; i < searchHistory.length; i++) {
+      // create a button for each element in search history
+      var cityName = searchHistory[i]
+      var newLi = $('<li>')
+      var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`
+      newLi.attr('class', 'input-text')
+      newLi.text(cityName) 
+      newLi.on('click', function (event) {
+        console.log(event)
+        let btnClicked = event.target.firstChild.data
+        let queryURL2 = `https://api.openweathermap.org/data/2.5/weather?q=${btnClicked}&appid=${APIKey}`
+        //event.stopPropagation()
+        //event.stopImmediatePropagation()
+        $.ajax({
+          url: queryURL2,
+          method: 'GET'
+        }).then(response => {
+          forecast(response)
+  
+        })
+        
+      })
+      inputList.append(newLi)    
+    }
+     
+  }
 
-  // var for api key to weather app
-  $('#search-city').on('click', searchForCity)
-
-  // FUNCTION FOR WHEN SEARCH BUTTON IS PRESSED
-
-  //two functions
-    //on that searchesForCity(name)
-    //oging to add info for the current weather and the 5 day
-
-  function searchForCity() {
-    clearHistory()
-    console.log('button was clicked')
-    // create a button variable 
-    var textInputBtn = $('<button>')
-    // create a var findCity access the textContent of the inputField/previous sibling element
-    var findCity = $(this).siblings('#inputField').val()
-    // input the url to query insert findCity
-    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
-
-    var testSearch = searchCity('miami') // this should be the VALUE INSIDE findCity
-
-    console.log('TEST SEARCH-->', testSearch)
-
-    $.ajax({
-      url: queryURL,
-      method: 'GET'
-    })
-      .then(response => {
-        //CURRENT WEATHER API CALL
-        // fill in todays date info
-        let today = moment().format('dddd, MMMM Do YYYY')
+  function forecast (response) {
+    let today = moment().format('dddd, MMMM Do YYYY')
         $('#current-date').text(today)
         console.log(`Should be todays date----> ${today.toString()}`);
         // ==================================================================================================
@@ -92,6 +86,91 @@ $(document).ready(function () {
         console.log(response)
 
         return { lat, lon }
+  }
+
+//this is the repetitive code
+function fiveDayForecast (response) {
+    console.log('5Day-->', fiveDayForecast)
+    const list = response.list
+
+    const days = [list[8], list[16], list[24], list[32], list[40]]
+
+    
+   
+    function addDay(currentDay,index) {
+      let dayDate = moment().add(index+1, 'days').format('dddd, MMMM Do YYYY')
+      console.log(`This is where TOMORROWS date -----> ${dayDate}`)
+      $(`#day-${index + 1}-date`).text(dayDate)
+      // date info=================================
+      var dayTemp = currentDay.main.temp
+      // //console.log('We ARE HERE!!!!' + day5Temp)
+      // convert temp from kelvin to fahrenheight
+      var dayTempF = Math.floor((dayTemp - 273.15) * 1.80 + 32)
+      // select the id that day4Temp text should go
+      $(`#day-${index+1}-temp`).text(dayTempF)
+      // // console.log('WE ARE HERE!!!!!!!!!' + day5TempF)
+      // set the day3 Humidity
+      var dayHumidity = currentDay.main.humidity
+      $(`#day-${index +1 }-hum`).append(dayHumidity)
+      // // console.log('WE ARE AT THE END OF CARD 3')
+    }
+
+
+      days.forEach((day, index) => {
+        addDay(day,index)
+      })
+  }
+
+
+// functions ================================================================
+
+
+
+  // grab the necessary tools to use ajax and weather api
+  // create a var to store the queryURL
+
+  // SET UP LOCAL STORAGE!!!
+  // 1. Create global array to store each city user is searching data for
+  // 2. Once you have an array push each city user is searching into that array(this will be within click event of submit button where you're getting user input)
+  // 3. Once you pushed into an array within same click event write localStorage.setItem to set that array into localStorage(make sure to JSON.stringify for an array you're setting up)
+  // 4. And then you can retrieve array data back using localstorage.getItem
+
+  // var for api key to weather app
+  $('#search-city').on('click', searchForCity)
+  $('.input-text').on('click', function (event) {
+    console.log(event)
+    console.log('btn clicked')
+    var btnCity = $('.input-text').text()
+    console.log(`This is where the btn clicked text should be ---> ${btnCity}`)
+  })
+  // FUNCTION FOR WHEN SEARCH BUTTON IS PRESSED
+
+  //two functions
+    //on that searchesForCity(name)
+    //oging to add info for the current weather and the 5 day
+
+  function searchForCity() {
+    clearHistory()
+    console.log('button was clicked')
+    // create a button variable 
+    var textInputBtn = $('<button>')
+    // create a var findCity access the textContent of the inputField/previous sibling element
+    var findCity = $(this).siblings('#inputField').val()
+    // input the url to query insert findCity
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${findCity}&appid=${APIKey}`
+
+    var testSearch = searchCity('miami') // this should be the VALUE INSIDE findCity
+
+    console.log('TEST SEARCH-->', testSearch)
+
+    $.ajax({
+      url: queryURL,
+      method: 'GET'
+    })
+      .then(response => {
+        const {lat, lon} = response.coord;
+        forecast(response)
+        return { lat, lon }
       })
       .then(coordinates => {
         var lat = coordinates.lat;
@@ -102,97 +181,9 @@ $(document).ready(function () {
           url: queryURL,
           method: 'GET'
         })
-          .then(fiveDayForecast => {
-            console.log('5Day-->', fiveDayForecast)
-            // grab the first cards id and give it tomorrows date 
-            let tomorrowsDate = moment().add(1, 'days').format('dddd, MMMM Do YYYY')
-            console.log(`This is where TOMORROWS date -----> ${tomorrowsDate}`)
-            $('#day-after-date').text(tomorrowsDate)
-            // set day after date using moment.js
-            // $('#day-after-date').text(moment().add(1, 'days').calender())
-            // console.log('Moment Time Stamp ----->' + moment().add(1, 'days').calender())
-            // set the day after temp var to main.temp
-            var dayAfterTemp = fiveDayForecast.list[0].main.temp
-            // convert temp from kelvin to fahrenheight
-            var dayAfterTempF = Math.floor((dayAfterTemp - 273.15) * 1.80 + 32)
-            // select the id to append dayAfterTempF
-            $('#day-after-temp').text(dayAfterTempF)
-            console.log(dayAfterTempF)
-            // set the dayAfter Humidity
-            var dayAfterhumidity = fiveDayForecast.list[0].main.humidity
-            $('#day-after-hum').append(dayAfterhumidity)
-            console.log(dayAfterhumidity)
-
-            // CARD 2 ================================================
-            // SECOND CARD DATA
-            let day2Date = moment().add(2, 'days').format('dddd, MMMM Do YYYY')
-            console.log(`This is where TOMORROWS date -----> ${day2Date}`)
-            $('#day-2-date').text(day2Date)
-            // 2 days after date=========================================
-            var day2Temp = fiveDayForecast.list[1].main.temp
-            //console.log('We ARE HERE!!!!' + day2Temp)
-            // convert temp from kelvin to fahrenheight
-            var day2TempF = Math.floor((day2Temp - 273.15) * 1.80 + 32)
-            // select the id that day2Temp text should go
-            $('#day-two-temp').text(day2TempF)
-            console.log('WE ARE HERE!!!!!!!!!' + day2TempF)
-            // set the dayAfter Humidity
-            var day2humidity = fiveDayForecast.list[1].main.humidity
-            $('#day-two-hum').append(day2humidity)
-            console.log(dayAfterhumidity)
-            // THIS IS WHERE I AM CURRENTLY STOPPED!!!!
-            // THIRD CARD DATA
-            // CARD 3 ================================================
-            let day3Date = moment().add(3, 'days').format('dddd, MMMM Do YYYY')
-            console.log(`This is where TOMORROWS date -----> ${day3Date}`)
-            $('#day-3-date').text(day3Date)
-            var day3Temp = fiveDayForecast.list[2].main.temp
-            // //console.log('We ARE HERE!!!!' + day3Temp)
-            // convert temp from kelvin to fahrenheight
-            var day3TempF = Math.floor((day3Temp - 273.15) * 1.80 + 32)
-            // select the id that day2Temp text should go
-            $('#day-three-temp').text(day3TempF)
-            // console.log('WE ARE HERE!!!!!!!!!' + day3TempF)
-            // set the day3 Humidity
-            var day3humidity = fiveDayForecast.list[2].main.humidity
-            $('#day-three-hum').append(day3humidity)
-            console.log('WE ARE AT THE END OF CARD 3')
-
-            // CARD 4 =================================
-            let day4Date = moment().add(4, 'days').format('dddd, MMMM Do YYYY')
-            console.log(`This is where TOMORROWS date -----> ${day4Date}`)
-            $('#day-4-date').text(day4Date)
-            // date info================================
-
-            var day4Temp = fiveDayForecast.list[3].main.temp
-            //console.log('We ARE HERE!!!!' + day4Temp)
-            // convert temp from kelvin to fahrenheight
-            var day4TempF = Math.floor((day4Temp - 273.15) * 1.80 + 32)
-            // // select the id that day4Temp text should go
-            $('#day-four-temp').text(day4TempF)
-            // console.log('WE ARE HERE!!!!!!!!!' + day4TempF)
-            // // set the day3 Humidity
-            var day4humidity = fiveDayForecast.list[3].main.humidity
-            $('#day-four-hum').append(day4humidity)
-            // console.log('WE ARE AT THE END OF CARD 3')
-
-            // CARD 5 =================================
-            let day5Date = moment().add(5, 'days').format('dddd, MMMM Do YYYY')
-            console.log(`This is where TOMORROWS date -----> ${day5Date}`)
-            $('#day-5-date').text(day2Date)
-
-            // date info=================================
-            var day5Temp = fiveDayForecast.list[4].main.temp
-            // //console.log('We ARE HERE!!!!' + day5Temp)
-            // convert temp from kelvin to fahrenheight
-            var day5TempF = Math.floor((day5Temp - 273.15) * 1.80 + 32)
-            // select the id that day4Temp text should go
-            $('#day-five-temp').text(day5TempF)
-            // // console.log('WE ARE HERE!!!!!!!!!' + day5TempF)
-            // set the day3 Humidity
-            var day5humidity = fiveDayForecast.list[4].main.humidity
-            $('#day-five-hum').append(day5humidity)
-            // // console.log('WE ARE AT THE END OF CARD 3')
+          .then(response => {
+            console.log('calling5dayforecast function')
+            fiveDayForecast(response)
           })
           .catch(err => console.log(err))
 
@@ -214,33 +205,8 @@ $(document).ready(function () {
   //$('.input-button').on('click', searchForCity)
   // console.log('INPUT BUTTON CLASS CLICKED')
 
-  function loadSearchHistory() {
-    var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
-    var inputList = $('#input-list')
-    for (i = 0; i < searchHistory.length; i++) {
-      var cityName = searchHistory[i]
-      var newLi = $('<li>')
-      var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`
-      newLi.attr('class', 'input-text')
-      newLi.text(cityName)
   
-      // newLi.on('click', function(){
-      //   // extract code needed to pass in a argument to searchForCity function
-      //   $.ajax({
-      //     url: queryURL,
-      //     method: 'GET'
-      //   }).then(res => {
-
-      //     console.log(res)
-      //   })
-      //   // access this button that was clicked 
-      //   // call function
-      //   // need a function that takes in a name of a city. Access the queryURL / 
-      // })
-      inputList.append(newLi)    
-    }  
-  }
-
+  // =============================================================================== culry ^^^
   function clearHistory () {
     let clearme = '';
     $('#day-after-hum').text(clearme)
@@ -256,9 +222,5 @@ $(document).ready(function () {
   loadSearchHistory()
 
 
-  function fiveDayForecast () {
-
-
-  }
 })
 
