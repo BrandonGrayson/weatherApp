@@ -111,6 +111,7 @@ function fiveDayForecast (response) {
       // // console.log('WE ARE HERE!!!!!!!!!' + day5TempF)
       // set the day3 Humidity
       var dayHumidity = currentDay.main.humidity
+      console.log(`DAY HUMIDITY HERE ----> ${dayHumidity}`)
       $(`#day-${index +1 }-hum`).append(dayHumidity)
       // // console.log('WE ARE AT THE END OF CARD 3')
     }
