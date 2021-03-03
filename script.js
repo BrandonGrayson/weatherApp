@@ -18,6 +18,8 @@ $(document).ready(function () {
       return cityInfo
   }
 
+  // function for loading search history on click
+
   function loadSearchHistory() {
     var searchHistory = JSON.parse(window.localStorage.getItem('history')) || [];
     var inputList = $('#input-list')
@@ -90,10 +92,14 @@ $(document).ready(function () {
 
 //this is the repetitive code
 function fiveDayForecast (response) {
-    console.log('5Day-->', fiveDayForecast)
+    // console.log('5Day-->', fiveDayForecast)
+    console.log('THIS IS THE RESPONSE.LIST---->', response.list)
     const list = response.list
 
-    const days = [list[8], list[16], list[24], list[32], list[40]]
+
+    const days = [list[8], list[16], list[24], list[32], list[39]]
+    console.log('BELOW IS THE 4TH INDEX WHERE THE ERR IS')
+    console.log(days[4])
 
     
    
