@@ -216,11 +216,11 @@ function fiveDayForecast (response) {
   // =============================================================================== culry ^^^
   function clearHistory () {
     let clearme = '';
-    $('#day-after-hum').text(clearme)
-    $('#day-two-hum').text(clearme)
-    $('#day-three-hum').text(clearme)
-    $('#day-four-hum').text(clearme)
-    $('#day-five-hum').text(clearme)
+    $('#day-1-hum').text(clearme)
+    $('#day-2-hum').text(clearme)
+    $('#day-3-hum').text(clearme)
+    $('#day-4-hum').text(clearme)
+    $('#day-5-hum').text(clearme)
     console.log(`THIS IS THE DAY AFTER HUMIDITY DATA!!!! ----> ${clearme}`)
     // $('#day-after-hum').text() = "";
     // clearme.text() = "";
