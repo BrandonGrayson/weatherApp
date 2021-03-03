@@ -1,4 +1,4 @@
-console.log(moment())
+// console.log(moment())
 $(document).ready(function () {
 
   var APIKey = "a8bfa6adc6cea260ba1bbbb01147a568"
@@ -11,7 +11,7 @@ $(document).ready(function () {
       url: queryURL,
       method: 'GET'
     }).then(response => {
-        console.log('RESPPONSE_________________>', response)
+        // console.log('RESPPONSE_________________>', response)
         cityInfo = response
         return
       }).catch(error => console.log(error))
@@ -53,7 +53,7 @@ $(document).ready(function () {
   function forecast (response) {
     let today = moment().format('dddd, MMMM Do YYYY')
         $('#current-date').text(today)
-        console.log(`Should be todays date----> ${today.toString()}`);
+        // console.log(`Should be todays date----> ${today.toString()}`);
         // ==================================================================================================
         //FILL IN ALL CURRENT WEATHER HTML
         var name = response.name
@@ -93,19 +93,19 @@ $(document).ready(function () {
 //this is the repetitive code
 function fiveDayForecast (response) {
     // console.log('5Day-->', fiveDayForecast)
-    console.log('THIS IS THE RESPONSE.LIST---->', response.list)
+    // console.log('THIS IS THE RESPONSE.LIST---->', response.list)
     const list = response.list
 
 
     const days = [list[8], list[16], list[24], list[32], list[39]]
-    console.log('BELOW IS THE 4TH INDEX WHERE THE ERR IS')
-    console.log(days[4])
+    // console.log('BELOW IS THE 4TH INDEX WHERE THE ERR IS')
+    // console.log(days[4])
 
     
    
     function addDay(currentDay,index) {
       let dayDate = moment().add(index+1, 'days').format('dddd, MMMM Do YYYY')
-      console.log(`This is where TOMORROWS date -----> ${dayDate}`)
+      // console.log(`This is where TOMORROWS date -----> ${dayDate}`)
       $(`#day-${index + 1}-date`).text(dayDate)
       // date info=================================
       var dayTemp = currentDay.main.temp
@@ -117,7 +117,7 @@ function fiveDayForecast (response) {
       // // console.log('WE ARE HERE!!!!!!!!!' + day5TempF)
       // set the day3 Humidity
       var dayHumidity = currentDay.main.humidity
-      console.log(`DAY HUMIDITY HERE ----> ${dayHumidity}`)
+      // console.log(`DAY HUMIDITY HERE ----> ${dayHumidity}`)
       $(`#day-${index +1 }-hum`).append(dayHumidity)
       // // console.log('WE ARE AT THE END OF CARD 3')
     }
